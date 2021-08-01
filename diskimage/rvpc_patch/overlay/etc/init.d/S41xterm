@@ -1,0 +1,25 @@
+#!/bin/sh
+
+
+start() {
+	printf "Starting xterm: "
+	DISPLAY=:0; export DISPLAY
+	sleep 3 && xterm  & 
+}
+
+
+
+case "$1" in
+	start)
+		start
+	;;
+	stop)
+		stop
+	;;
+	restart|reload)
+		restart
+	;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac

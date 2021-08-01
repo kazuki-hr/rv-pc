@@ -1,0 +1,104 @@
+/dts-v1/;
+
+/ {
+	#address-cells = <0x2>;
+	#size-cells = <0x2>;
+	model = "kise-lab,simrv";
+	compatible = "kise_lab,simrv";
+
+	cpus {
+		#address-cells = <0x1>;
+		#size-cells = <0x0>;
+		timebase-frequency = <0x47868c0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			reg = <0x0>;
+			status = "okay";
+			compatible = "riscv";
+			riscv,isa = "rv32acim";
+			mmu-type = "riscv,sv32";
+			clock-frequency = <0x47868c0>;
+
+			interrupt-controller {
+				#interrupt-cells = <0x1>;
+				interrupt-controller;
+				compatible = "riscv,cpu-intc";
+				phandle = <0x1>;
+			};
+		};
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x0 0x80000000 0x0 0x8000000>;
+	};
+
+	soc {
+		#address-cells = <0x2>;
+		#size-cells = <0x2>;
+		compatible = "simple-bus";
+		ranges;
+
+		clint@60000000 {
+			compatible = "riscv,clint0";
+			interrupts-extended = <0x1 0x3 0x1 0x7>;
+			reg = <0x0 0x60000000 0x0 0x8000000>;
+		};
+
+		plic@50000000 {
+			#interrupt-cells = <0x1>;
+			interrupt-controller;
+			compatible = "riscv,plic0";
+			riscv,ndev = <0x1f>;
+			reg = <0x0 0x50000000 0x0 0x8000000>;
+			interrupts-extended = <0x1 0x9 0x1 0xb>;
+			phandle = <0x2>;
+		};
+
+		virtio@40000000 {
+			compatible = "virtio,mmio";
+			reg = <0x0 0x40000000 0x0 0x1000>;
+			interrupts-extended = <0x2 0x1>;
+		};
+
+		virtio@41000000 {
+			compatible = "virtio,mmio";
+			reg = <0x0 0x41000000 0x0 0x1000>;
+			interrupts-extended = <0x2 0x2>;
+		};
+
+		virtio@42000000 {
+			compatible = "virtio,mmio";
+			reg = <0x0 0x42000000 0x0 0x1000>;
+			interrupts-extended = <0x2 0x3>;
+		};
+
+		virtio@43000000 {
+			compatible = "virtio,mmio";
+			reg = <0x0 0x43000000 0x0 0x1000>;
+			interrupts-extended = <0x2 0x4>;
+		};
+
+		virtio@44000000 {
+			compatible = "virtio,mmio";
+			reg = <0x0 0x44000000 0x0 0x1000>;
+			interrupts-extended = <0x2 0x5>;
+		};
+
+		framebuffer@45000000{
+			compatible = "simple-framebuffer";
+			reg = <0x0 0x45000000 0x0 (640*480*2)>;
+			width = <640>;
+			height = <480>;
+			stride = <(640 * 2)>;
+			format = "r5g6b5";
+			status = "okay";
+		};
+
+	};
+
+	chosen {
+		bootargs = "root=/dev/vda rw fbcon=font:PEARL8x8";
+	};
+};
