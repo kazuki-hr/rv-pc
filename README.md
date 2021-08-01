@@ -21,7 +21,7 @@ Demo: https://youtu.be/Kt_iXVAjXcQ
 
 Recommended environment: Ubuntu 18.04 LTS
 
-### 1. Copy the disk image file to the microSD card.
+### 1. Copy the [disk image file(initmem.bin)](https://github.com/kazuki-hr/rv-pc/releases/tag/v0.1.0) to the microSD card.
 
 **Warning: This can potentially cause data loss. Please do this at your own risk.**
 
@@ -31,16 +31,21 @@ $ dd if=initmem.bin of=/dev/[Device file name of your SD card]
 
 ### 2.Insert the microSD card into the FPGA board, and connect a USB mouse, VGA display, PS/2 keyboard and (optionally) an Ethernet cable to the FPGA board.
 
-Connect the USB mouse to the built-in USB connector on the board. PS/2 keyboards can be connected to the board by inserting a [Pmod PS2](https://reference.digilentinc.com/pmod/pmodps2/start) into the Pmod JB port.
+Connect the USB mouse to the built-in USB connector on the board. PS/2 keyboards can be connected to the board by inserting a [Pmod PS2](https://reference.digilentinc.com/pmod/pmodps2/start) into the lower part of the Pmod JB port.
 The default resolution of the display is 640x480.
 
 
 ### 3. Create a Vivado project and generate bitstream.
-You can create a Vivado project with the following command.
+You can create a Vivado project with the following command
 ```bash
 $ vivado -mode batch -source main.tcl
 ```
+or by selecting main.tcl in Tools -> Run Tcl Script in Vivado GUI.
+
 Then open main/main.xpr with Vivado.
+
+
+You can also use the pre-built [m_main.bit](https://github.com/kazuki-hr/rv-pc/releases/tag/v0.1.0).
 
 ### 4. Configure the FPGA.
 If you use RV-PC by connecting it to a host PC, you can perform JTAG configuration. If the RV-PC is to be used standalone, you have to perform  Quad-SPI configuration.
